@@ -85,7 +85,17 @@ export const markdownComponents: Components = {
       }}
     />
   ),
-  a: ({ node, ...props }) => <Link {...props} />,
+  a: ({ node, ...props }) => {
+    const targetIsExternal =
+      !props.href?.startsWith("#") && !props.href?.startsWith("/");
+    return (
+      <Link
+        {...props}
+        target={targetIsExternal ? "_blank" : undefined}
+        rel={targetIsExternal ? "noopener" : undefined}
+      />
+    );
+  },
   img: ({ node, ...props }) => (
     <Paper
       {...props}
