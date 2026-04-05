@@ -123,7 +123,12 @@ export const markdownComponents: Components = {
     />
   ),
   input: ({ node, ...props }) => {
-    return <Checkbox checked={props.checked} sx={{ pointerEvents: "none" }} />;
+    return (
+      <Checkbox
+        checked={props.checked}
+        sx={{ pointerEvents: "none", padding: 1 }}
+      />
+    );
   },
   li: ({ node, ...props }) => {
     return (

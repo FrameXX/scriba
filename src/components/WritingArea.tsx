@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDebouncedValue } from "../modules/hooks/use_debounced_value";
 
 interface Props {
@@ -8,12 +8,56 @@ interface Props {
 }
 
 export function WritingArea(props: Props) {
-  const [content, setContent] = useState("");
+  const input = useRef<HTMLElement>(null);
+  const [content, setContent] = useState(() => {
+    if (navigator.cookieEnabled) {
+      return localStorage.getItem("content") || "";
+    }
+    return "";
+  });
   const contentDebounced = useDebouncedValue(content, 400);
 
   useEffect(() => {
     props.onChange?.(contentDebounced);
+    if (navigator.cookieEnabled) {
+      localStorage.setItem("content", contentDebounced);
+    }
   }, [props, contentDebounced]);
+
+  useEffect(() => {
+    if (input.current && content) {
+      input.current.innerText = content;
+    }
+  }, []);
+
+  // function handlePaste(e: React.ClipboardEvent<HTMLElement>) {
+  //   e.preventDefault();
+  //   const text = e.clipboardData.getData("text/plain");
+  //   const selection = window.getSelection();
+  //   if (!selection) return;
+  //   const range = selection.getRangeAt(0);
+  //   range.deleteContents();
+  //   range.insertNode(document.createTextNode(text));
+  //   range.collapse(false);
+  //   selection.removeAllRanges();
+  //   selection.addRange(range);
+  //   setContent(e.currentTarget.innerText);
+  // }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLElement>) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const selection = window.getSelection();
+      if (!selection) return;
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(document.createTextNode("\t"));
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      setContent(e.currentTarget.innerText);
+    }
+  }
 
   return (
     <Paper
@@ -30,6 +74,7 @@ export function WritingArea(props: Props) {
       }}
     >
       <Box
+        ref={input}
         contentEditable
         data-placeholder="You can write here..."
         spellCheck="false"
@@ -37,7 +82,8 @@ export function WritingArea(props: Props) {
         autoCapitalize="off"
         sx={{
           outline: "none",
-          whiteSpace: props.wrapContent ? null : "pre",
+          whiteSpace: props.wrapContent ? "pre-wrap" : "pre",
+          tabSize: 4,
           minWidth: "100%",
           minHeight: "100%",
           width: props.wrapContent ? null : "max-content",
@@ -49,7 +95,10 @@ export function WritingArea(props: Props) {
             opacity: 0.6,
           },
         }}
-        onInput={(e) => setContent(e.currentTarget.innerText)}
+        onInput={(e: React.InputEvent<HTMLElement>) =>
+          setContent(e.currentTarget.innerText)
+        }
+        onKeyDown={handleKeyDown}
       />
     </Paper>
   );
