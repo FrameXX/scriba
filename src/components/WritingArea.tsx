@@ -19,7 +19,7 @@ export function WritingArea(props: Props) {
     <Paper
       elevation={4}
       sx={{
-        padding: "12px",
+        padding: 1.6,
         flexGrow: 1,
         flexBasis: 0,
         width: 0,
