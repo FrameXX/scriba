@@ -1,3 +1,5 @@
+import { WritingArea } from "./components/WritingArea";
+
 export function App() {
-  return <></>;
+  return <WritingArea />;
 }
