@@ -30,19 +30,19 @@ export function WritingArea(props: Props) {
     }
   }, []);
 
-  // function handlePaste(e: React.ClipboardEvent<HTMLElement>) {
-  //   e.preventDefault();
-  //   const text = e.clipboardData.getData("text/plain");
-  //   const selection = window.getSelection();
-  //   if (!selection) return;
-  //   const range = selection.getRangeAt(0);
-  //   range.deleteContents();
-  //   range.insertNode(document.createTextNode(text));
-  //   range.collapse(false);
-  //   selection.removeAllRanges();
-  //   selection.addRange(range);
-  //   setContent(e.currentTarget.innerText);
-  // }
+  function handlePaste(e: React.ClipboardEvent<HTMLElement>) {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text/plain");
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(text));
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    setContent(e.currentTarget.innerText);
+  }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLElement>) {
     if (e.key === "Tab") {
@@ -98,6 +98,7 @@ export function WritingArea(props: Props) {
         onInput={(e: React.InputEvent<HTMLElement>) =>
           setContent(e.currentTarget.innerText)
         }
+        onPaste={handlePaste}
         onKeyDown={handleKeyDown}
       />
     </Paper>

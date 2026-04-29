@@ -1,19 +1,46 @@
-import "katex/dist/katex.min.css";
 import { Paper, Box } from "@mui/material";
-import ReactMarkdown, { type Components } from "react-markdown";
-import remarkMath from "remark-math";
+import { type Components } from "react-markdown";
 import rehypeKatex from "rehype-katex";
-import remarkGfm from "remark-gfm";
-import remarkSuperSub from "remark-supersub";
-import rehypeRaw from "rehype-raw";
+import { unified } from "unified";
+import { useMemo } from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import rehypeParse from "rehype-parse";
+import rehypeReact from "rehype-react";
+import createAsciidctor from "@asciidoctor/core";
+import { rehypeStemBlock } from "../modules/rehype_stem_block";
+import { rehypeInlineStem } from "../modules/rehype_inline_stem";
 
 interface Props {
-  content: string;
+  sourceCode: string;
   componentMap: Components;
   wrapContent?: boolean;
 }
 
+const asciidoctor = createAsciidctor();
+const baseProcessor = unified()
+  .use(rehypeParse, { fragment: true })
+  .use(rehypeStemBlock)
+  .use(rehypeInlineStem)
+  .use(rehypeKatex)
+  .freeze();
+
 export function Preview(props: Props) {
+  const content = useMemo(() => {
+    const html = asciidoctor.convert(props.sourceCode, {
+      safe: "safe",
+      attributes: { showtitle: true, stem: "latexmath" },
+    });
+
+    return baseProcessor()
+      .use(rehypeReact, {
+        jsx,
+        jsxs,
+        Fragment,
+        components: props.componentMap,
+      })
+      .processSync(html).result;
+  }, [props.sourceCode, props.componentMap]);
+
   return (
     <Paper
       elevation={4}
@@ -33,17 +60,7 @@ export function Preview(props: Props) {
           width: props.wrapContent ? null : "max-content",
         }}
       >
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm, remarkSuperSub, remarkMath]}
-          rehypePlugins={[rehypeKatex, rehypeRaw]}
-          remarkRehypeOptions={{
-            footnoteLabel: " ",
-            footnoteLabelTagName: "hr",
-          }}
-          components={props.componentMap}
-        >
-          {props.content}
-        </ReactMarkdown>
+        {content}
       </Box>
     </Paper>
   );

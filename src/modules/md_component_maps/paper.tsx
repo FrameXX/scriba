@@ -16,8 +16,9 @@ import {
   Paper,
   Box,
   Checkbox,
-  colors,
+  ThemeProvider,
 } from "@mui/material";
+import type { ReactElement, ReactNode } from "react";
 import { type Components } from "react-markdown";
 
 type TextAlignment =
@@ -28,7 +29,7 @@ type TextAlignment =
   | "justify"
   | undefined;
 
-export const markdownComponents: Components = {
+export const paperComponentMap: Components = {
   h1: ({ node, ...props }) => (
     <Typography {...props} variant="h3" component="h1" gutterBottom />
   ),
@@ -55,6 +56,16 @@ export const markdownComponents: Components = {
         marginBottom: 1.6,
         "&:only-child": { margin: 0 },
         "&:has(> img)": { display: "flex", gap: 1.6, flexWrap: "wrap" },
+      }}
+    />
+  ),
+  span: ({ node, ...props }) => (
+    <Box
+      component="span"
+      {...props}
+      sx={{
+        textDecoration:
+          props.className === "underline" ? "underline" : undefined,
       }}
     />
   ),
@@ -170,53 +181,76 @@ export const markdownComponents: Components = {
     <TableCell
       {...props}
       align={(style?.textAlign as TextAlignment) || "left"}
-      sx={{
-        fontWeight: "bold",
-        borderRight: "1px solid rgba(224, 224, 224, 1)",
-      }}
     />
   ),
   td: ({ node, style, ...props }) => (
     <TableCell
       {...props}
       align={(style?.textAlign as TextAlignment) || "left"}
-      sx={{ borderRight: "1px solid rgba(224, 224, 224, 1)" }}
     />
   ),
-  code: ({ node, ...props }) => {
-    const className = props.className;
-    const inline = (props as { inline?: boolean }).inline;
-    const isInline = !className && !inline;
-    if (isInline) {
-      return (
-        <Paper
-          {...props}
-          component="code"
-          sx={{
-            background: colors.grey[200],
-            paddingX: 0.4,
-            paddingY: 0.2,
-            marginX: 0.4,
-            borderRadius: 1,
-            fontFamily: "JetBrains Mono",
-            fontWeight: 500,
-          }}
-        />
-      );
+  code: ({ node, className, ...props }) => {
+    if (className) {
+      return <code className={className} {...props} />;
     }
+
     return (
       <Paper
-        {...props}
         component="code"
+        elevation={0}
         sx={{
-          background: colors.grey[900],
-          color: "white",
+          display: "inline",
+          borderRadius: 0.5,
+          paddingX: 0.6,
+          paddingY: 0.2,
+          fontFamily: "JetBrains Mono, monospace",
+          bgcolor: "action.selected",
+        }}
+        {...props}
+      />
+    );
+  },
+  pre: ({ node, children, ...props }) => {
+    const codeElement = children as ReactElement<{
+      className?: string;
+      children?: ReactNode;
+    }>;
+    const className = codeElement?.props?.className || "";
+    const match = /language-(\w+)/.exec(className);
+    const language = match ? match[1] : undefined;
+    const codeContent = codeElement?.props?.children;
+
+    return (
+      <Paper
+        component="pre"
+        sx={{
           display: "block",
           padding: 1.6,
-          fontFamily: "JetBrains Mono",
+          fontFamily: "JetBrains Mono, monospace",
+          fontSize: "0.875rem",
           fontWeight: 500,
+          overflow: "auto",
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-word",
         }}
-      />
+        {...props}
+      >
+        {language && (
+          <>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ textTransform: "uppercase" }}
+            >
+              {language}
+            </Typography>
+            <Divider sx={{ marginY: 1.2 }} />
+          </>
+        )}
+        <Box component="code" sx={{ display: "block" }}>
+          {codeContent}
+        </Box>
+      </Paper>
     );
   },
 };
