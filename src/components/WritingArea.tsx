@@ -1,6 +1,7 @@
 import { Box, Paper } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { useDebouncedValue } from "../modules/hooks/use_debounced_value";
+import { DEFAULT_SOURCE_CODE } from "../modules/default_source_code";
 
 interface Props {
   onChange?: (content: string) => unknown;
@@ -11,7 +12,7 @@ export function WritingArea(props: Props) {
   const input = useRef<HTMLElement>(null);
   const [content, setContent] = useState(() => {
     if (navigator.cookieEnabled) {
-      return localStorage.getItem("content") || "";
+      return localStorage.getItem("content") || DEFAULT_SOURCE_CODE;
     }
     return "";
   });
