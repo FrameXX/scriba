@@ -11,9 +11,10 @@ Links are easy: https://asciidoc.org[AsciiDoc Home].
 == Lists
 
 .Unordered List
-* Level 1
-** Level 2
-*** Level 3
+. First item
+. Second item
+.. Sub-item A
+.. Sub-item B
 
 .Ordered List
 . First item
@@ -21,18 +22,30 @@ Links are easy: https://asciidoc.org[AsciiDoc Home].
 .. Sub-item A
 .. Sub-item B
 
+.Task list
+* [x] Finished task
+* [ ] Pending task
+** [ ] Pending subtask
+
 == Blocks and Code
+
+[NOTE]
+====
+This is an admonition block used to grab attention.
+====
+
+[quote, Author name, Source name]
+____
+This is a text quote. It can be multiple paragraphs long and will be automatically indented and formatted as a block.
+
+This is a second paragraph of a quote.
+____
 
 [source,python]
 ----
 def hello_world():
     print("Hello, AsciiDoc!")
 ----
-
-[NOTE]
-====
-This is an admonition block used to grab attention.
-====
 
 == Tables
 
@@ -49,7 +62,7 @@ This is an admonition block used to grab attention.
 Asciidoctor supports math via the \`stem\` (Science, Technology, Engineering, and Math) attribute.
 
 === Inline Math
-The following expression is rendered inline: stem:[E = mc^2]. You can also use more complex notation like stem:[\sqrt{a^2 + b^2} = c].
+The following expression is rendered inline: stem:[E = mc^2]. You can also use more complex notation like stem:[\\sqrt{a^2 + b^2} = c].
 
 === Display Math
 For standalone equations, use the block syntax:
