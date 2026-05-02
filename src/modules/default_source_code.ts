@@ -57,6 +57,16 @@ def hello_world():
 | Images | Pending | Path resolution required
 |===
 
+== Images
+
+You can put mutliple images next to each other with \`image:\`.
+
+image:https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128] image:https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128]
+
+Or have an image on a separate line using \`image::\`.
+
+image::https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128]
+
 == Mathematical Expressions
 
 Asciidoctor supports math via the \`stem\` (Science, Technology, Engineering, and Math) attribute.
