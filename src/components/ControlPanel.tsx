@@ -1,5 +1,7 @@
 import { Box, Paper } from "@mui/material";
 import { ViewModeOption, type ViewMode } from "./ViewModeOption";
+import { useLayout } from "../modules/hooks/use_layout";
+import { ViewModeToggle } from "./ViewModeToggle";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
@@ -7,6 +9,8 @@ interface Props {
 }
 
 export function ControlPanel(props: Props) {
+  const { isMobile } = useLayout();
+
   return (
     <Box
       sx={{
@@ -29,8 +33,8 @@ export function ControlPanel(props: Props) {
           }}
         ></Paper>
       )}
-      <ViewModeOption onChange={props.onViewModeSelect} />
-      {props.viewMode !== "writing" && (
+      {!isMobile && <ViewModeOption onChange={props.onViewModeSelect} />}
+      {props.viewMode !== "write" && (
         <Paper
           elevation={3}
           sx={{
@@ -39,6 +43,12 @@ export function ControlPanel(props: Props) {
             flexShrink: 0,
           }}
         ></Paper>
+      )}
+      {isMobile && (
+        <ViewModeToggle
+          viewMode={props.viewMode}
+          onChange={props.onViewModeSelect}
+        />
       )}
     </Box>
   );

@@ -10,7 +10,7 @@ import { Icon } from "./Icon";
 import { useState } from "react";
 import { useLayout } from "../modules/hooks/use_layout";
 
-export type ViewMode = "writing" | "both" | "preview";
+export type ViewMode = "write" | "both" | "preview";
 
 interface Props {
   onChange: (mode: ViewMode) => unknown;
@@ -75,17 +75,17 @@ export function ViewModeOption(props: Props) {
             },
           }}
         >
-          <MenuItem onClick={() => handleModeSelect("writing")}>
+          <MenuItem title="Write" onClick={() => handleModeSelect("write")}>
             <Icon gutterRight iconId="pencil" />
-            <Typography variant="inherit">Writing</Typography>
+            <Typography variant="inherit">Write</Typography>
           </MenuItem>
           {!isMobile && (
-            <MenuItem onClick={() => handleModeSelect("both")}>
+            <MenuItem title="Both" onClick={() => handleModeSelect("both")}>
               <Icon gutterRight iconId="text-box-edit" />
               <Typography variant="inherit">Both</Typography>
             </MenuItem>
           )}
-          <MenuItem onClick={() => handleModeSelect("preview")}>
+          <MenuItem title="Preview" onClick={() => handleModeSelect("preview")}>
             <Icon gutterRight iconId="text-box" />
             <Typography variant="inherit">Preview</Typography>
           </MenuItem>

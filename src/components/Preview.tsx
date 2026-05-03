@@ -14,6 +14,7 @@ interface Props {
   sourceCode: string;
   componentMap: Components;
   wrapContent?: boolean;
+  visible: boolean;
 }
 
 const asciidoctor = createAsciidctor();
@@ -45,6 +46,7 @@ export function Preview(props: Props) {
     <Paper
       elevation={3}
       sx={{
+        display: props.visible ? null : "none",
         flexGrow: 1,
         padding: 1.6,
         overflow: "auto",

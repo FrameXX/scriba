@@ -47,12 +47,16 @@ export const paperComponentMap: Components = {
   h6: ({ node, ...props }) => (
     <Typography {...props} variant="subtitle2" component="h6" />
   ),
-  p: ({ node, ...props }) => (
-    <Typography
+  p: ({ node, ...props }) => <Typography {...props} variant="body1" />,
+  div: ({ node, ...props }) => (
+    <Box
+      component="div"
       {...props}
-      variant="body1"
       sx={{
-        marginBottom: 1.6,
+        marginBottom: props.className === "paragraph" ? 1.2 : 0,
+        ":last-child": {
+          marginBottom: 0,
+        },
       }}
     />
   ),
@@ -185,11 +189,6 @@ export const paperComponentMap: Components = {
       {...props}
       data-test="lol"
       align={(style?.textAlign as TextAlignment) || "left"}
-      sx={{
-        "& p": {
-          marginBottom: 0,
-        },
-      }}
     />
   ),
   code: ({ node, className, ...props }) => {

@@ -13,7 +13,7 @@ export function App() {
   const { isMobile } = useLayout();
 
   const viewMode =
-    isMobile && selectedViewMode === "both" ? "writing" : selectedViewMode;
+    isMobile && selectedViewMode === "both" ? "write" : selectedViewMode;
 
   return (
     <Box
@@ -43,16 +43,16 @@ export function App() {
             minHeight: 0,
           }}
         >
-          {viewMode !== "preview" && (
-            <WritingArea onChange={(content) => setSourceCode(content)} />
-          )}
-          {viewMode !== "writing" && (
-            <Preview
-              wrapContent
-              sourceCode={sourceCode}
-              componentMap={paperComponentMap}
-            />
-          )}
+          <WritingArea
+            visible={viewMode != "preview"}
+            onChange={(content) => setSourceCode(content)}
+          />
+          <Preview
+            visible={viewMode != "write"}
+            wrapContent
+            sourceCode={sourceCode}
+            componentMap={paperComponentMap}
+          />
         </Box>
         <ControlPanel
           viewMode={viewMode}

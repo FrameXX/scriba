@@ -6,6 +6,7 @@ import { DEFAULT_SOURCE_CODE } from "../modules/default_source_code";
 interface Props {
   onChange?: (content: string) => unknown;
   wrapContent?: boolean;
+  visible: boolean;
 }
 
 export function WritingArea(props: Props) {
@@ -29,7 +30,7 @@ export function WritingArea(props: Props) {
     if (input.current && content) {
       input.current.innerText = content;
     }
-  }, []);
+  });
 
   const handlePaste = (e: React.ClipboardEvent<HTMLElement>) => {
     e.preventDefault();
@@ -64,6 +65,7 @@ export function WritingArea(props: Props) {
     <Paper
       elevation={3}
       sx={{
+        display: props.visible ? null : "none",
         padding: 1.6,
         flexGrow: 1,
         width: 0,
