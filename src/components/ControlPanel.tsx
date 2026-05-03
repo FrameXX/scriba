@@ -3,6 +3,7 @@ import { ViewModeOption, type ViewMode } from "./ViewModeOption";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
+  viewMode: ViewMode;
 }
 
 export function ControlPanel(props: Props) {
@@ -18,23 +19,27 @@ export function ControlPanel(props: Props) {
         minHeight: 0,
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{
-          flexGrow: 1,
-          margin: 0,
-          flexShrink: 0,
-        }}
-      ></Paper>
+      {props.viewMode !== "preview" && (
+        <Paper
+          elevation={3}
+          sx={{
+            flexGrow: 1,
+            margin: 0,
+            flexShrink: 0,
+          }}
+        ></Paper>
+      )}
       <ViewModeOption onChange={props.onViewModeSelect} />
-      <Paper
-        elevation={3}
-        sx={{
-          flexGrow: 1,
-          margin: 0,
-          flexShrink: 0,
-        }}
-      ></Paper>
+      {props.viewMode !== "writing" && (
+        <Paper
+          elevation={3}
+          sx={{
+            flexGrow: 1,
+            margin: 0,
+            flexShrink: 0,
+          }}
+        ></Paper>
+      )}
     </Box>
   );
 }

@@ -183,7 +183,13 @@ export const paperComponentMap: Components = {
   td: ({ node, style, ...props }) => (
     <TableCell
       {...props}
+      data-test="lol"
       align={(style?.textAlign as TextAlignment) || "left"}
+      sx={{
+        "& p": {
+          marginBottom: 0,
+        },
+      }}
     />
   ),
   code: ({ node, className, ...props }) => {

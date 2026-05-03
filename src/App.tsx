@@ -54,7 +54,10 @@ export function App() {
             />
           )}
         </Box>
-        <ControlPanel onViewModeSelect={setSelectedViewMode} />
+        <ControlPanel
+          viewMode={viewMode}
+          onViewModeSelect={setSelectedViewMode}
+        />
       </Box>
     </Box>
   );

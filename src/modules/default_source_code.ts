@@ -59,17 +59,17 @@ def hello_world():
 
 == Images
 
-You can put mutliple images next to each other with \`image:\`.
+You can put mutliple images next to each other with \`image:\` attribute.
 
 image:https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128] image:https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128]
 
-Or have an image on a separate line using \`image::\`.
+Or have an image on a separate line using \`image::\` attribute.
 
 image::https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg[Tux, 128]
 
 == Mathematical Expressions
 
-Asciidoctor supports math via the \`stem\` (Science, Technology, Engineering, and Math) attribute.
+Asciidoctor supports math via the \`stem:\` (Science, Technology, Engineering, and Math) attribute.
 
 === Inline Math
 The following expression is rendered inline: stem:[E = mc^2]. You can also use more complex notation like stem:[\\sqrt{a^2 + b^2} = c].
