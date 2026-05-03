@@ -17,7 +17,7 @@ export function WritingArea(props: Props) {
     }
     return "";
   });
-  const contentDebounced = useDebouncedValue(content, 400);
+  const contentDebounced = useDebouncedValue(content, 1000);
 
   useEffect(() => {
     props.onChange?.(contentDebounced);
@@ -30,7 +30,8 @@ export function WritingArea(props: Props) {
     if (input.current && content) {
       input.current.innerText = content;
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePaste = (e: React.ClipboardEvent<HTMLElement>) => {
     e.preventDefault();
