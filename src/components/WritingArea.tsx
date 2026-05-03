@@ -31,7 +31,7 @@ export function WritingArea(props: Props) {
     }
   }, []);
 
-  function handlePaste(e: React.ClipboardEvent<HTMLElement>) {
+  const handlePaste = (e: React.ClipboardEvent<HTMLElement>) => {
     e.preventDefault();
     const text = e.clipboardData.getData("text/plain");
     const selection = window.getSelection();
@@ -43,9 +43,9 @@ export function WritingArea(props: Props) {
     selection.removeAllRanges();
     selection.addRange(range);
     setContent(e.currentTarget.innerText);
-  }
+  };
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLElement>) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Tab") {
       e.preventDefault();
       const selection = window.getSelection();
@@ -58,15 +58,14 @@ export function WritingArea(props: Props) {
       selection.addRange(range);
       setContent(e.currentTarget.innerText);
     }
-  }
+  };
 
   return (
     <Paper
-      elevation={4}
+      elevation={3}
       sx={{
         padding: 1.6,
         flexGrow: 1,
-        flexBasis: 0,
         width: 0,
         minWidth: props.wrapContent ? null : 0,
         overflow: "auto",

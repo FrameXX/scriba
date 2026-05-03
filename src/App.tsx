@@ -2,10 +2,18 @@ import { Box } from "@mui/material";
 import { WritingArea } from "./components/WritingArea";
 import { useState } from "react";
 import { Preview } from "./components/Preview";
-import { paperComponentMap } from "./modules/md_component_maps/paper";
+import { paperComponentMap } from "./modules/component_maps/paper";
+import { ControlPanel } from "./components/ControlPanel";
+import type { ViewMode } from "./components/ViewModeOption";
+import { useLayout } from "./modules/hooks/use_layout";
 
 export function App() {
   const [sourceCode, setSourceCode] = useState("");
+  const [selectedViewMode, setSelectedViewMode] = useState<ViewMode>("both");
+  const { isMobile } = useLayout();
+
+  const viewMode =
+    isMobile && selectedViewMode === "both" ? "writing" : selectedViewMode;
 
   return (
     <Box
@@ -19,19 +27,34 @@ export function App() {
     >
       <Box
         sx={{
-          bgcolor: "background.paper",
-          flexGrow: 1,
           display: "flex",
+          flexGrow: 1,
+          flexDirection: "column",
           margin: 1.6,
           gap: 1.6,
         }}
       >
-        <WritingArea onChange={(content) => setSourceCode(content)} />
-        <Preview
-          wrapContent
-          sourceCode={sourceCode}
-          componentMap={paperComponentMap}
-        />
+        <Box
+          component="main"
+          sx={{
+            display: "flex",
+            gap: 1.6,
+            flexGrow: 1,
+            minHeight: 0,
+          }}
+        >
+          {viewMode !== "preview" && (
+            <WritingArea onChange={(content) => setSourceCode(content)} />
+          )}
+          {viewMode !== "writing" && (
+            <Preview
+              wrapContent
+              sourceCode={sourceCode}
+              componentMap={paperComponentMap}
+            />
+          )}
+        </Box>
+        <ControlPanel onViewModeSelect={setSelectedViewMode} />
       </Box>
     </Box>
   );

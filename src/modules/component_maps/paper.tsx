@@ -16,7 +16,6 @@ import {
   Paper,
   Box,
   Checkbox,
-  ThemeProvider,
 } from "@mui/material";
 import type { ReactElement, ReactNode } from "react";
 import { type Components } from "react-markdown";
@@ -31,16 +30,16 @@ type TextAlignment =
 
 export const paperComponentMap: Components = {
   h1: ({ node, ...props }) => (
-    <Typography {...props} variant="h3" component="h1" gutterBottom />
+    <Typography {...props} variant="h3" component="h1" sx={{ marginY: 2 }} />
   ),
   h2: ({ node, ...props }) => (
-    <Typography {...props} variant="h4" component="h2" gutterBottom />
+    <Typography {...props} variant="h4" component="h2" sx={{ marginY: 2 }} />
   ),
   h3: ({ node, ...props }) => (
-    <Typography {...props} variant="h5" component="h3" gutterBottom />
+    <Typography {...props} variant="h5" component="h3" sx={{ marginY: 2 }} />
   ),
   h4: ({ node, ...props }) => (
-    <Typography {...props} variant="h6" component="h4" gutterBottom />
+    <Typography {...props} variant="h6" component="h4" sx={{ marginY: 2 }} />
   ),
   h5: ({ node, ...props }) => (
     <Typography {...props} variant="subtitle1" component="h5" />
@@ -54,8 +53,6 @@ export const paperComponentMap: Components = {
       variant="body1"
       sx={{
         marginBottom: 1.6,
-        "&:only-child": { margin: 0 },
-        "&:has(> img)": { display: "flex", gap: 1.6, flexWrap: "wrap" },
       }}
     />
   ),

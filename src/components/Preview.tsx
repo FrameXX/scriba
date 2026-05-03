@@ -43,10 +43,9 @@ export function Preview(props: Props) {
 
   return (
     <Paper
-      elevation={4}
+      elevation={3}
       sx={{
         flexGrow: 1,
-        flexBasis: 0,
         padding: 1.6,
         overflow: "auto",
         width: 0,

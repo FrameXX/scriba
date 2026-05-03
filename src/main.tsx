@@ -4,6 +4,7 @@ import "./index.css";
 import "katex/dist/katex.min.css";
 import { App } from "./App";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { LayoutProvider } from "./components/LayoutProvider";
 
 const globalTheme = createTheme({
   colorSchemes: {
@@ -15,7 +16,9 @@ const globalTheme = createTheme({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={globalTheme}>
-      <App />
+      <LayoutProvider>
+        <App />
+      </LayoutProvider>
     </ThemeProvider>
   </StrictMode>,
 );
