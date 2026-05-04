@@ -2,10 +2,12 @@ import { Box, Paper } from "@mui/material";
 import { ViewModeOption, type ViewMode } from "./ViewModeOption";
 import { useLayout } from "../modules/hooks/use_layout";
 import { ViewModeToggle } from "./ViewModeToggle";
+import { ExportOption } from "./ExportOption";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
   viewMode: ViewMode;
+  onRequestAdocExport: () => unknown;
 }
 
 export function ControlPanel(props: Props) {
@@ -13,11 +15,12 @@ export function ControlPanel(props: Props) {
 
   return (
     <Box
+      id="control-panel"
       sx={{
         margin: 0,
         padding: 0,
         display: "flex",
-        height: 38,
+        height: 40,
         flexShrink: 0,
         gap: 1.6,
         minHeight: 0,
@@ -38,11 +41,16 @@ export function ControlPanel(props: Props) {
         <Paper
           elevation={3}
           sx={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
             flexGrow: 1,
             margin: 0,
             flexShrink: 0,
           }}
-        ></Paper>
+        >
+          <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
+        </Paper>
       )}
       {isMobile && (
         <ViewModeToggle

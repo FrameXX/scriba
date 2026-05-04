@@ -26,9 +26,16 @@ export function ViewModeToggle(props: Props) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        contain: "paint",
       }}
     >
-      <IconButton title="Toggle view mode" onClick={handleClick}>
+      <IconButton
+        sx={{
+          borderRadius: 0,
+        }}
+        title="Toggle view mode"
+        onClick={handleClick}
+      >
         <Icon iconId={props.viewMode != "write" ? "text-box" : "pencil"} />
       </IconButton>
     </Paper>

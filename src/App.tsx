@@ -6,6 +6,7 @@ import { paperComponentMap } from "./modules/component_maps/paper";
 import { ControlPanel } from "./components/ControlPanel";
 import type { ViewMode } from "./components/ViewModeOption";
 import { useLayout } from "./modules/hooks/use_layout";
+import { exportAdoc } from "./modules/export_adoc";
 
 export function App() {
   const [sourceCode, setSourceCode] = useState("");
@@ -18,7 +19,7 @@ export function App() {
   return (
     <Box
       sx={{
-        position: "fixed",
+        position: "absolute",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -57,6 +58,7 @@ export function App() {
         <ControlPanel
           viewMode={viewMode}
           onViewModeSelect={setSelectedViewMode}
+          onRequestAdocExport={() => exportAdoc("document.adoc", sourceCode)}
         />
       </Box>
     </Box>

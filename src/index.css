@@ -5,3 +5,26 @@
 body {
   margin: 0;
 }
+
+@media print {
+  * {
+    visibility: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #preview-content,
+  #preview-content * {
+    visibility: visible;
+  }
+
+  #preview-content {
+    all: unset;
+    padding: 12px;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: fit-content;
+  }
+}

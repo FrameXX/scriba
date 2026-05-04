@@ -9,6 +9,7 @@ import {
 import { Icon } from "./Icon";
 import { useState } from "react";
 import { useLayout } from "../modules/hooks/use_layout";
+import { MenuTitle } from "./MenuTitle";
 
 export type ViewMode = "write" | "both" | "preview";
 
@@ -44,20 +45,25 @@ export function ViewModeOption(props: Props) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        contain: "paint",
       }}
     >
       <Box>
         <IconButton
+          id="view-mode-button"
+          sx={{
+            borderRadius: 0,
+          }}
           title="Change view mode"
           aria-haspopup="true"
-          aria-controls={menuOpen ? "view-menu" : undefined}
+          aria-controls={menuOpen ? "view-mode-menu" : undefined}
           aria-expanded={menuOpen ? "true" : undefined}
           onClick={handleClick}
         >
           <Icon iconId="view-dashboard" />
         </IconButton>
         <Menu
-          id="view-menu"
+          id="view-mode-menu"
           anchorEl={anchorEl}
           open={menuOpen}
           onClose={handleClose}
@@ -71,21 +77,31 @@ export function ViewModeOption(props: Props) {
           }}
           slotProps={{
             list: {
-              "aria-labelledby": "basic-button",
+              "aria-labelledby": "view-mode-button",
             },
           }}
         >
-          <MenuItem title="Write" onClick={() => handleModeSelect("write")}>
+          <MenuTitle>View Mode</MenuTitle>
+          <MenuItem
+            title="Use writing view mode"
+            onClick={() => handleModeSelect("write")}
+          >
             <Icon gutterRight iconId="pencil" />
             <Typography variant="inherit">Write</Typography>
           </MenuItem>
           {!isMobile && (
-            <MenuItem title="Both" onClick={() => handleModeSelect("both")}>
+            <MenuItem
+              title="Use writing and preview mode"
+              onClick={() => handleModeSelect("both")}
+            >
               <Icon gutterRight iconId="text-box-edit" />
               <Typography variant="inherit">Both</Typography>
             </MenuItem>
           )}
-          <MenuItem title="Preview" onClick={() => handleModeSelect("preview")}>
+          <MenuItem
+            title="Use preview mode"
+            onClick={() => handleModeSelect("preview")}
+          >
             <Icon gutterRight iconId="text-box" />
             <Typography variant="inherit">Preview</Typography>
           </MenuItem>

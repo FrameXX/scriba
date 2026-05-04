@@ -64,6 +64,7 @@ export function WritingArea(props: Props) {
 
   return (
     <Paper
+      id="writing-area"
       elevation={3}
       sx={{
         display: props.visible ? null : "none",
