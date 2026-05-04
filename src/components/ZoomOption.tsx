@@ -35,7 +35,7 @@ export function ZoomOption(props: Props) {
         aria-expanded={menuOpen ? "true" : undefined}
         onClick={handleClick}
       >
-        <Icon iconId="magnify" />
+        <Icon iconId="magnify-plus-outline" />
       </IconButton>
       <Menu
         id={`${props.idPrefix}-zoom-menu`}
@@ -61,22 +61,22 @@ export function ZoomOption(props: Props) {
           title="Zoom in"
           onClick={() => props.onChooseAction("zoom_in")}
         >
-          <Icon gutterRight iconId="magnify-plus-outline" />
+          <Icon gutterRight iconId="plus" />
           <Typography variant="inherit">Zoom in</Typography>
         </MenuItem>
         <MenuItem
           title="Zoom out"
           onClick={() => props.onChooseAction("zoom_out")}
         >
-          <Icon gutterRight iconId="magnify-minus-outline" />
+          <Icon gutterRight iconId="minus" />
           <Typography variant="inherit">Zoom out</Typography>
         </MenuItem>
         <MenuItem
           title="Reset zoom"
           onClick={() => props.onChooseAction("reset")}
         >
-          <Icon gutterRight iconId="magnify-remove-outline" />
-          <Typography variant="inherit">Reset zoom</Typography>
+          <Icon gutterRight iconId="restore" />
+          <Typography variant="inherit">Reset</Typography>
         </MenuItem>
       </Menu>
     </Box>

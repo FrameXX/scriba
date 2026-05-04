@@ -46,11 +46,6 @@ export function ControlPanel(props: Props) {
             flexShrink: 0,
           }}
         >
-          <ZoomOption
-            title="Change writing area zoom level"
-            idPrefix="writing-area"
-            onChooseAction={props.onWritingAreaZoomAction}
-          />
           <IconButtonToggle
             title={
               props.wrapWriteArea
@@ -59,6 +54,11 @@ export function ControlPanel(props: Props) {
             }
             onToggle={props.onToggleWrapWriteArea}
             iconId={props.wrapWriteArea ? "wrap" : "wrap-disabled"}
+          />
+          <ZoomOption
+            title="Change writing area zoom level"
+            idPrefix="writing-area"
+            onChooseAction={props.onWritingAreaZoomAction}
           />
         </Paper>
       )}
@@ -75,12 +75,6 @@ export function ControlPanel(props: Props) {
             flexShrink: 0,
           }}
         >
-          <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
-          <ZoomOption
-            title="Change preview zoom level"
-            idPrefix="preview"
-            onChooseAction={props.onPreviewZoomAction}
-          />
           <IconButtonToggle
             title={
               props.wrapPreview
@@ -90,6 +84,12 @@ export function ControlPanel(props: Props) {
             onToggle={props.onToggleWrapPreview}
             iconId={props.wrapPreview ? "wrap" : "wrap-disabled"}
           />
+          <ZoomOption
+            title="Change preview zoom level"
+            idPrefix="preview"
+            onChooseAction={props.onPreviewZoomAction}
+          />
+          <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
         </Paper>
       )}
       {isMobile && (
