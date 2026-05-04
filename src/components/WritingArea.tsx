@@ -8,6 +8,7 @@ interface Props {
   onChange?: (content: string) => unknown;
   wrapContent?: boolean;
   visible: boolean;
+  zoom: number;
 }
 
 export function WritingArea(props: Props) {
@@ -80,6 +81,7 @@ export function WritingArea(props: Props) {
         autoCorrect="off"
         autoCapitalize="off"
         sx={{
+          zoom: props.zoom,
           fontVariantLigatures: "none",
           outline: "none",
           whiteSpace: props.wrapContent ? "pre-wrap" : "pre",

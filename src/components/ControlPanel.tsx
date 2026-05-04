@@ -4,12 +4,15 @@ import { useLayout } from "../modules/hooks/use_layout";
 import { ViewModeToggle } from "./ViewModeToggle";
 import { ExportOption } from "./ExportOption";
 import { IconButtonToggle } from "./IconButtonToggle";
+import { ZoomOption, type ZoomAction } from "./ZoomOption";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
   viewMode: ViewMode;
   wrapPreview: boolean;
   wrapWriteArea: boolean;
+  onPreviewZoomAction: (action: ZoomAction) => unknown;
+  onWritingAreaZoomAction: (action: ZoomAction) => unknown;
   onRequestAdocExport: () => unknown;
   onToggleWrapPreview: () => unknown;
   onToggleWrapWriteArea: () => unknown;
@@ -35,13 +38,25 @@ export function ControlPanel(props: Props) {
         <Paper
           elevation={3}
           sx={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
             flexGrow: 1,
             margin: 0,
             flexShrink: 0,
           }}
         >
+          <ZoomOption
+            title="Change writing area zoom level"
+            idPrefix="writing-area"
+            onChooseAction={props.onWritingAreaZoomAction}
+          />
           <IconButtonToggle
-            title=""
+            title={
+              props.wrapWriteArea
+                ? "Disable wraping in write area"
+                : "Enable wraping in write area"
+            }
             onToggle={props.onToggleWrapWriteArea}
             iconId={props.wrapWriteArea ? "wrap" : "wrap-disabled"}
           />
@@ -61,8 +76,17 @@ export function ControlPanel(props: Props) {
           }}
         >
           <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
+          <ZoomOption
+            title="Change preview zoom level"
+            idPrefix="preview"
+            onChooseAction={props.onPreviewZoomAction}
+          />
           <IconButtonToggle
-            title=""
+            title={
+              props.wrapPreview
+                ? "Disable wraping in preview"
+                : "Enable wraping in preview"
+            }
             onToggle={props.onToggleWrapPreview}
             iconId={props.wrapPreview ? "wrap" : "wrap-disabled"}
           />

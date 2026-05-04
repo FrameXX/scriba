@@ -1,6 +1,6 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { WritingArea } from "./components/WritingArea";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { Preview } from "./components/Preview";
 import { paperComponentMap } from "./modules/component_maps/paper";
 import { ControlPanel } from "./components/ControlPanel";
@@ -8,6 +8,7 @@ import type { ViewMode } from "./components/ViewModeOption";
 import { useLayout } from "./modules/hooks/use_layout";
 import { exportAdoc } from "./modules/export_adoc";
 import useLocalStorageState from "use-local-storage-state";
+import type { ZoomAction } from "./components/ZoomOption";
 
 export function App() {
   const { isMobile } = useLayout();
@@ -22,9 +23,30 @@ export function App() {
       defaultValue: false,
     },
   );
+  const [writingAreaZoom, setWritingAreaZoom] = useLocalStorageState(
+    "writing_area_zoom",
+    { defaultValue: 1 },
+  );
+  const [previewZoom, setPreviewZoom] = useLocalStorageState(
+    "set_preview_zoom",
+    { defaultValue: 1 },
+  );
 
   const viewMode =
     isMobile && selectedViewMode === "both" ? "write" : selectedViewMode;
+
+  const handleZoomAction = (
+    action: ZoomAction,
+    setter: Dispatch<SetStateAction<number>>,
+  ) => {
+    if (action == "zoom_in") {
+      setter((zoom) => Math.min(zoom + 0.05, 3));
+    } else if (action == "zoom_out") {
+      setter((zoom) => Math.max(zoom - 0.05, 0.1));
+    } else {
+      setter(1);
+    }
+  };
 
   return (
     <Box
@@ -55,11 +77,13 @@ export function App() {
           }}
         >
           <WritingArea
+            zoom={writingAreaZoom}
             wrapContent={wrapWriteArea}
             visible={viewMode != "preview"}
             onChange={(content) => setSourceCode(content)}
           />
           <Preview
+            zoom={previewZoom}
             wrapContent={wrapPreview}
             visible={viewMode != "write"}
             sourceCode={sourceCode}
@@ -71,6 +95,12 @@ export function App() {
           wrapPreview={wrapPreview}
           wrapWriteArea={wrapWriteArea}
           onViewModeSelect={setSelectedViewMode}
+          onPreviewZoomAction={(action) =>
+            handleZoomAction(action, setPreviewZoom)
+          }
+          onWritingAreaZoomAction={(action) =>
+            handleZoomAction(action, setWritingAreaZoom)
+          }
           onRequestAdocExport={() => exportAdoc("document.adoc", sourceCode)}
           onToggleWrapPreview={() => setWrapPreview((value) => !value)}
           onToggleWrapWriteArea={() => setWrapWriteArea((value) => !value)}

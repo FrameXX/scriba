@@ -17,6 +17,7 @@ interface Props {
   componentMap: Components;
   wrapContent?: boolean;
   visible: boolean;
+  zoom: number;
 }
 
 const asciidoctor = createAsciidctor();
@@ -82,6 +83,7 @@ export function Preview(props: Props) {
           sx={{
             minWidth: "100%",
             minHeight: "100%",
+            zoom: props.zoom,
             width: props.wrapContent ? null : "max-content",
           }}
         >

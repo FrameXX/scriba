@@ -6,10 +6,14 @@ import { MenuTitle } from "./MenuTitle";
 export type ViewMode = "write" | "both" | "preview";
 
 interface Props {
-  onRequestAdocExport: () => unknown;
+  title: string;
+  idPrefix: string;
+  onChooseAction: (option: ZoomAction) => unknown;
 }
 
-export function ExportOption(props: Props) {
+export type ZoomAction = "zoom_in" | "zoom_out" | "reset";
+
+export function ZoomOption(props: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
@@ -24,17 +28,17 @@ export function ExportOption(props: Props) {
   return (
     <Box>
       <IconButton
-        id="export-button"
-        title="Export"
+        id={`${props.idPrefix}-zoom-button`}
+        title={props.title}
         aria-haspopup="true"
-        aria-controls={menuOpen ? "export-menu" : undefined}
+        aria-controls={menuOpen ? `${props.idPrefix}-zoom-menu` : undefined}
         aria-expanded={menuOpen ? "true" : undefined}
         onClick={handleClick}
       >
-        <Icon iconId="export-variant" />
+        <Icon iconId="magnify" />
       </IconButton>
       <Menu
-        id="export-menu"
+        id={`${props.idPrefix}-zoom-menu`}
         anchorEl={anchorEl}
         open={menuOpen}
         onClose={handleClose}
@@ -48,30 +52,31 @@ export function ExportOption(props: Props) {
         }}
         slotProps={{
           list: {
-            "aria-labelledby": "export-button",
+            "aria-labelledby": `${props.idPrefix}-export-button`,
           },
         }}
       >
-        <MenuTitle>Export</MenuTitle>
+        <MenuTitle>Change zoom</MenuTitle>
         <MenuItem
-          title="Export as PDF"
-          onClick={() => {
-            window.print();
-            handleClose();
-          }}
+          title="Zoom in"
+          onClick={() => props.onChooseAction("zoom_in")}
         >
-          <Icon gutterRight iconId="file-pdf-box" />
-          <Typography variant="inherit">PDF</Typography>
+          <Icon gutterRight iconId="magnify-plus-outline" />
+          <Typography variant="inherit">Zoom in</Typography>
         </MenuItem>
         <MenuItem
-          title="Export as AsciiDoc source file"
-          onClick={() => {
-            props.onRequestAdocExport();
-            handleClose();
-          }}
+          title="Zoom out"
+          onClick={() => props.onChooseAction("zoom_out")}
         >
-          <Icon gutterRight iconId="file-code" />
-          <Typography variant="inherit">AsciiDoc</Typography>
+          <Icon gutterRight iconId="magnify-minus-outline" />
+          <Typography variant="inherit">Zoom out</Typography>
+        </MenuItem>
+        <MenuItem
+          title="Reset zoom"
+          onClick={() => props.onChooseAction("reset")}
+        >
+          <Icon gutterRight iconId="magnify-remove-outline" />
+          <Typography variant="inherit">Reset zoom</Typography>
         </MenuItem>
       </Menu>
     </Box>
