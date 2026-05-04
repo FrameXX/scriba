@@ -3,11 +3,16 @@ import { ViewModeOption, type ViewMode } from "./ViewModeOption";
 import { useLayout } from "../modules/hooks/use_layout";
 import { ViewModeToggle } from "./ViewModeToggle";
 import { ExportOption } from "./ExportOption";
+import { IconButtonToggle } from "./IconButtonToggle";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
   viewMode: ViewMode;
+  wrapPreview: boolean;
+  wrapWriteArea: boolean;
   onRequestAdocExport: () => unknown;
+  onToggleWrapPreview: () => unknown;
+  onToggleWrapWriteArea: () => unknown;
 }
 
 export function ControlPanel(props: Props) {
@@ -34,7 +39,13 @@ export function ControlPanel(props: Props) {
             margin: 0,
             flexShrink: 0,
           }}
-        ></Paper>
+        >
+          <IconButtonToggle
+            title=""
+            onToggle={props.onToggleWrapWriteArea}
+            iconId={props.wrapWriteArea ? "wrap" : "wrap-disabled"}
+          />
+        </Paper>
       )}
       {!isMobile && <ViewModeOption onChange={props.onViewModeSelect} />}
       {props.viewMode !== "write" && (
@@ -50,6 +61,11 @@ export function ControlPanel(props: Props) {
           }}
         >
           <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
+          <IconButtonToggle
+            title=""
+            onToggle={props.onToggleWrapPreview}
+            iconId={props.wrapPreview ? "wrap" : "wrap-disabled"}
+          />
         </Paper>
       )}
       {isMobile && (

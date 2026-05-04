@@ -1,6 +1,6 @@
-import { IconButton, Paper } from "@mui/material";
-import { Icon } from "./Icon";
+import { Paper } from "@mui/material";
 import type { ViewMode } from "./ViewModeOption";
+import { IconButtonToggle } from "./IconButtonToggle";
 
 interface Props {
   viewMode: ViewMode;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function ViewModeToggle(props: Props) {
-  const handleClick = () => {
+  const handleToggle = () => {
     if (props.viewMode != "write") {
       props.onChange("write");
     } else {
@@ -29,15 +29,12 @@ export function ViewModeToggle(props: Props) {
         contain: "paint",
       }}
     >
-      <IconButton
-        sx={{
-          borderRadius: 0,
-        }}
+      <IconButtonToggle
         title="Toggle view mode"
-        onClick={handleClick}
-      >
-        <Icon iconId={props.viewMode != "write" ? "text-box" : "pencil"} />
-      </IconButton>
+        notRound
+        iconId={props.viewMode != "write" ? "text-box" : "pencil"}
+        onToggle={handleToggle}
+      />
     </Paper>
   );
 }

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { WritingArea } from "./components/WritingArea";
 import { useState } from "react";
 import { Preview } from "./components/Preview";
@@ -7,11 +7,21 @@ import { ControlPanel } from "./components/ControlPanel";
 import type { ViewMode } from "./components/ViewModeOption";
 import { useLayout } from "./modules/hooks/use_layout";
 import { exportAdoc } from "./modules/export_adoc";
+import useLocalStorageState from "use-local-storage-state";
 
 export function App() {
+  const { isMobile } = useLayout();
   const [sourceCode, setSourceCode] = useState("");
   const [selectedViewMode, setSelectedViewMode] = useState<ViewMode>("both");
-  const { isMobile } = useLayout();
+  const [wrapPreview, setWrapPreview] = useLocalStorageState("wrap_preview", {
+    defaultValue: true,
+  });
+  const [wrapWriteArea, setWrapWriteArea] = useLocalStorageState(
+    "wrap_write_area",
+    {
+      defaultValue: false,
+    },
+  );
 
   const viewMode =
     isMobile && selectedViewMode === "both" ? "write" : selectedViewMode;
@@ -45,20 +55,25 @@ export function App() {
           }}
         >
           <WritingArea
+            wrapContent={wrapWriteArea}
             visible={viewMode != "preview"}
             onChange={(content) => setSourceCode(content)}
           />
           <Preview
+            wrapContent={wrapPreview}
             visible={viewMode != "write"}
-            wrapContent
             sourceCode={sourceCode}
             componentMap={paperComponentMap}
           />
         </Box>
         <ControlPanel
           viewMode={viewMode}
+          wrapPreview={wrapPreview}
+          wrapWriteArea={wrapWriteArea}
           onViewModeSelect={setSelectedViewMode}
           onRequestAdocExport={() => exportAdoc("document.adoc", sourceCode)}
+          onToggleWrapPreview={() => setWrapPreview((value) => !value)}
+          onToggleWrapWriteArea={() => setWrapWriteArea((value) => !value)}
         />
       </Box>
     </Box>

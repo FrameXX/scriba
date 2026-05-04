@@ -66,7 +66,7 @@ export function Preview(props: Props) {
   return (
     <ThemeProvider theme={isPrinting ? lightTheme : globalTheme}>
       <Paper
-        id="preview-content"
+        id="preview-container"
         elevation={3}
         sx={{
           display: props.visible ? null : "none",
@@ -78,6 +78,7 @@ export function Preview(props: Props) {
         }}
       >
         <Box
+          id="preview-content"
           sx={{
             minWidth: "100%",
             minHeight: "100%",

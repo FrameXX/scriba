@@ -13,12 +13,12 @@ body {
     print-color-adjust: exact;
   }
 
-  #preview-content,
-  #preview-content * {
+  #preview-container,
+  #preview-container * {
     visibility: visible;
   }
 
-  #preview-content {
+  #preview-container {
     all: unset;
     padding: 12px;
     overflow: auto;
@@ -26,5 +26,11 @@ body {
     left: 0;
     top: 0;
     width: fit-content;
+  }
+
+  #preview-content {
+    all: unset;
+    min-width: "100%";
+    min-height: "100%";
   }
 }

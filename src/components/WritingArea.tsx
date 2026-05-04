@@ -1,7 +1,8 @@
 import { Box, Paper } from "@mui/material";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDebouncedValue } from "../modules/hooks/use_debounced_value";
 import { DEFAULT_SOURCE_CODE } from "../modules/default_source_code";
+import useLocalStorageState from "use-local-storage-state";
 
 interface Props {
   onChange?: (content: string) => unknown;
@@ -11,19 +12,13 @@ interface Props {
 
 export function WritingArea(props: Props) {
   const input = useRef<HTMLElement>(null);
-  const [content, setContent] = useState(() => {
-    if (navigator.cookieEnabled) {
-      return localStorage.getItem("content") || DEFAULT_SOURCE_CODE;
-    }
-    return "";
+  const [content, setContent] = useLocalStorageState("source_code", {
+    defaultValue: DEFAULT_SOURCE_CODE,
   });
   const contentDebounced = useDebouncedValue(content, 1000);
 
   useEffect(() => {
     props.onChange?.(contentDebounced);
-    if (navigator.cookieEnabled) {
-      localStorage.setItem("content", contentDebounced);
-    }
   }, [props, contentDebounced]);
 
   useEffect(() => {
@@ -85,6 +80,7 @@ export function WritingArea(props: Props) {
         autoCorrect="off"
         autoCapitalize="off"
         sx={{
+          fontVariantLigatures: "none",
           outline: "none",
           whiteSpace: props.wrapContent ? "pre-wrap" : "pre",
           tabSize: 4,
