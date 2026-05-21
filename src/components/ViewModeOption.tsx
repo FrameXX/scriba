@@ -60,7 +60,7 @@ export function ViewModeOption(props: Props) {
           aria-expanded={menuOpen ? "true" : undefined}
           onClick={handleClick}
         >
-          <Icon iconId="view-dashboard" />
+          <Icon iconId="unfold-less-vertical" />
         </IconButton>
         <Menu
           id="view-mode-menu"

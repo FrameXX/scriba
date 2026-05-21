@@ -9,6 +9,7 @@ interface Props {
   title: string;
   idPrefix: string;
   onChooseAction: (option: ZoomAction) => unknown;
+  value: number;
 }
 
 export type ZoomAction = "zoom_in" | "zoom_out" | "reset";
@@ -56,7 +57,7 @@ export function ZoomOption(props: Props) {
           },
         }}
       >
-        <MenuTitle>Change zoom</MenuTitle>
+        <MenuTitle>Change zoom ({Math.round(props.value * 100)}%)</MenuTitle>
         <MenuItem
           title="Zoom in"
           onClick={() => props.onChooseAction("zoom_in")}

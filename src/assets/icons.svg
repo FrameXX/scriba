@@ -29,9 +29,11 @@
     <symbol
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      id="view-dashboard"
+      id="unfold-less-vertical"
     >
-      <path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z" />
+      <path
+        d="M5.41,7.41L10,12L5.41,16.59L4,15.17L7.17,12L4,8.83L5.41,7.41M18.59,16.59L14,12L18.59,7.42L20,8.83L16.83,12L20,15.17L18.59,16.59Z"
+      />
     </symbol>
     <symbol
       xmlns="http://www.w3.org/2000/svg"

@@ -12,7 +12,9 @@ interface Props {
   wrapPreview: boolean;
   wrapWriteArea: boolean;
   onPreviewZoomAction: (action: ZoomAction) => unknown;
+  previewZoom: number;
   onWritingAreaZoomAction: (action: ZoomAction) => unknown;
+  writingAreaZoom: number;
   onRequestAdocExport: () => unknown;
   onToggleWrapPreview: () => unknown;
   onToggleWrapWriteArea: () => unknown;
@@ -59,6 +61,7 @@ export function ControlPanel(props: Props) {
             title="Change writing area zoom level"
             idPrefix="writing-area"
             onChooseAction={props.onWritingAreaZoomAction}
+            value={props.writingAreaZoom}
           />
         </Paper>
       )}
@@ -88,6 +91,7 @@ export function ControlPanel(props: Props) {
             title="Change preview zoom level"
             idPrefix="preview"
             onChooseAction={props.onPreviewZoomAction}
+            value={props.previewZoom}
           />
           <ExportOption onRequestAdocExport={props.onRequestAdocExport} />
         </Paper>

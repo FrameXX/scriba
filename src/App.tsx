@@ -95,6 +95,8 @@ export function App() {
           wrapPreview={wrapPreview}
           wrapWriteArea={wrapWriteArea}
           onViewModeSelect={setSelectedViewMode}
+          writingAreaZoom={writingAreaZoom}
+          previewZoom={previewZoom}
           onPreviewZoomAction={(action) =>
             handleZoomAction(action, setPreviewZoom)
           }
