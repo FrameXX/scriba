@@ -7,10 +7,11 @@ import { flushSync } from "react-dom";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
-import createAsciidctor from "@asciidoctor/core";
+
 import { rehypeStemBlock } from "../modules/rehype_stem_block";
 import { rehypeInlineStem } from "../modules/rehype_inline_stem";
 import { globalTheme, lightTheme } from "../modules/themes";
+import type { Processor } from "../modules/processor";
 
 interface Props {
   sourceCode: string;
@@ -18,9 +19,9 @@ interface Props {
   wrapContent?: boolean;
   visible: boolean;
   zoom: number;
+  processor: Processor;
 }
 
-const asciidoctor = createAsciidctor();
 const baseProcessor = unified()
   .use(rehypeParse, { fragment: true })
   .use(rehypeStemBlock)
@@ -49,10 +50,7 @@ export function Preview(props: Props) {
   }, []);
 
   const content = useMemo(() => {
-    const html = asciidoctor.convert(props.sourceCode, {
-      safe: "safe",
-      attributes: { showtitle: true, stem: "latexmath" },
-    });
+    const html = props.processor.process(props.sourceCode);
 
     return baseProcessor()
       .use(rehypeReact, {
@@ -62,7 +60,7 @@ export function Preview(props: Props) {
         components: props.componentMap,
       })
       .processSync(html).result;
-  }, [props.sourceCode, props.componentMap]);
+  }, [props.sourceCode, props.componentMap, props.processor]);
 
   return (
     <ThemeProvider theme={isPrinting ? lightTheme : globalTheme}>

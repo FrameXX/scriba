@@ -1,4 +1,11 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Icon } from "./Icon";
 import { useState } from "react";
 import { MenuTitle } from "./MenuTitle";
@@ -60,8 +67,10 @@ export function ExportOption(props: Props) {
             handleClose();
           }}
         >
-          <Icon gutterRight iconId="file-pdf-box" />
-          <Typography variant="inherit">PDF</Typography>
+          <ListItemIcon>
+            <Icon iconId="file-pdf-box" />
+          </ListItemIcon>
+          <ListItemText>PDF</ListItemText>
         </MenuItem>
         <MenuItem
           title="Export as AsciiDoc source file"
@@ -70,8 +79,10 @@ export function ExportOption(props: Props) {
             handleClose();
           }}
         >
-          <Icon gutterRight iconId="file-code" />
-          <Typography variant="inherit">AsciiDoc</Typography>
+          <ListItemIcon>
+            <Icon iconId="file-code" />
+          </ListItemIcon>
+          <ListItemText>AsciiDoc</ListItemText>
         </MenuItem>
       </Menu>
     </Box>

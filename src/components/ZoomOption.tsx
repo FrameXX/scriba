@@ -1,4 +1,11 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Icon } from "./Icon";
 import { useState } from "react";
 import { MenuTitle } from "./MenuTitle";
@@ -62,22 +69,28 @@ export function ZoomOption(props: Props) {
           title="Zoom in"
           onClick={() => props.onChooseAction("zoom_in")}
         >
-          <Icon gutterRight iconId="plus" />
-          <Typography variant="inherit">Zoom in</Typography>
+          <ListItemIcon>
+            <Icon iconId="plus" />
+          </ListItemIcon>
+          <ListItemText>Zoom in</ListItemText>
         </MenuItem>
         <MenuItem
           title="Zoom out"
           onClick={() => props.onChooseAction("zoom_out")}
         >
-          <Icon gutterRight iconId="minus" />
-          <Typography variant="inherit">Zoom out</Typography>
+          <ListItemIcon>
+            <Icon iconId="minus" />
+          </ListItemIcon>
+          <ListItemText>Zoom out</ListItemText>
         </MenuItem>
         <MenuItem
           title="Reset zoom"
           onClick={() => props.onChooseAction("reset")}
         >
-          <Icon gutterRight iconId="restore" />
-          <Typography variant="inherit">Reset</Typography>
+          <ListItemIcon>
+            <Icon iconId="restore" />
+          </ListItemIcon>
+          <ListItemText>Reset</ListItemText>
         </MenuItem>
       </Menu>
     </Box>

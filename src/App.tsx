@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { WritingArea, type WritingAreaRef } from "./components/WritingArea";
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
   type Dispatch,
@@ -15,14 +16,27 @@ import { useLayout } from "./modules/hooks/use_layout";
 import { exportAdoc } from "./modules/export_adoc";
 import useLocalStorageState from "use-local-storage-state";
 import type { ZoomAction } from "./components/ZoomOption";
+import type { SourceLanguage } from "./components/SourceLanguageOption";
+import { AsciiDocProcessor } from "./modules/processor/asciidoc";
+import { MarkDownProcessor } from "./modules/processor/markdown";
+import type { Processor } from "./modules/processor";
 
 const SPLASHSCREEN_TRANSITION_TIME_MS = 200;
 const LOAD_DELAY_MS = 200;
+
+const processorMap: Record<SourceLanguage, Processor> = {
+  asciidoc: new AsciiDocProcessor(),
+  markdown: new MarkDownProcessor(),
+} as const;
 
 export function App() {
   const { isMobile } = useLayout();
   const [sourceCode, setSourceCode] = useState("");
   const [selectedViewMode, setSelectedViewMode] = useState<ViewMode>("both");
+  const [sourceLanguage, setSourceLanguage] =
+    useLocalStorageState<SourceLanguage>("processor", {
+      defaultValue: "asciidoc",
+    });
   const writingAreaRef = useRef<WritingAreaRef>(null);
   const [wrapPreview, setWrapPreview] = useLocalStorageState("wrap_preview", {
     defaultValue: true,
@@ -40,6 +54,11 @@ export function App() {
   const [previewZoom, setPreviewZoom] = useLocalStorageState(
     "set_preview_zoom",
     { defaultValue: 1 },
+  );
+
+  const processor = useMemo(
+    () => processorMap[sourceLanguage],
+    [sourceLanguage],
   );
 
   const viewMode =
@@ -106,6 +125,7 @@ export function App() {
             onChange={(content) => setSourceCode(content)}
           />
           <Preview
+            processor={processor}
             zoom={previewZoom}
             wrapContent={wrapPreview}
             visible={viewMode != "write"}
@@ -117,7 +137,7 @@ export function App() {
           viewMode={viewMode}
           wrapPreview={wrapPreview}
           wrapWriteArea={wrapWriteArea}
-          onViewModeSelect={setSelectedViewMode}
+          onViewModeSelection={setSelectedViewMode}
           writingAreaZoom={writingAreaZoom}
           previewZoom={previewZoom}
           onPreviewZoomAction={(action) =>
@@ -129,6 +149,8 @@ export function App() {
           onRequestAdocExport={() => exportAdoc("document.adoc", sourceCode)}
           onToggleWrapPreview={() => setWrapPreview((value) => !value)}
           onToggleWrapWriteArea={() => setWrapWriteArea((value) => !value)}
+          onSourceLanguageSelection={(language) => setSourceLanguage(language)}
+          sourceLanguage={sourceLanguage}
           onUndo={() => writingAreaRef.current?.undo()}
           onRedo={() => writingAreaRef.current?.redo()}
         />

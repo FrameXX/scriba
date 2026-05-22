@@ -3,7 +3,6 @@ import iconSourcePath from "../assets/icons.svg?url";
 
 interface Props {
   iconId: string;
-  gutterRight?: boolean;
 }
 
 export function Icon(props: Props) {
@@ -17,7 +16,6 @@ export function Icon(props: Props) {
         width: 24,
         color: "primary.text",
         fill: "currentColor",
-        marginRight: props.gutterRight ? 1.2 : 0,
       }}
       aria-hidden
       role="img"

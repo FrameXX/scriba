@@ -1,10 +1,13 @@
 import {
   Box,
+  FormControlLabel,
   IconButton,
   Menu,
   MenuItem,
+  MenuList,
   Paper,
-  Typography,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 import { Icon } from "./Icon";
 import { useState } from "react";
@@ -15,6 +18,7 @@ export type ViewMode = "write" | "both" | "preview";
 
 interface Props {
   onChange: (mode: ViewMode) => unknown;
+  value: ViewMode;
 }
 
 export function ViewModeOption(props: Props) {
@@ -82,29 +86,42 @@ export function ViewModeOption(props: Props) {
           }}
         >
           <MenuTitle>View Mode</MenuTitle>
-          <MenuItem
-            title="Use writing view mode"
-            onClick={() => handleModeSelect("write")}
-          >
-            <Icon gutterRight iconId="pencil" />
-            <Typography variant="inherit">Write</Typography>
-          </MenuItem>
-          {!isMobile && (
-            <MenuItem
-              title="Use writing and preview mode"
-              onClick={() => handleModeSelect("both")}
-            >
-              <Icon gutterRight iconId="text-box-edit" />
-              <Typography variant="inherit">Both</Typography>
-            </MenuItem>
-          )}
-          <MenuItem
-            title="Use preview mode"
-            onClick={() => handleModeSelect("preview")}
-          >
-            <Icon gutterRight iconId="text-box" />
-            <Typography variant="inherit">Preview</Typography>
-          </MenuItem>
+          <RadioGroup value={props.value}>
+            <MenuList dense>
+              <MenuItem
+                title="Use writing view mode"
+                onClick={() => handleModeSelect("write")}
+              >
+                <FormControlLabel
+                  value="write"
+                  control={<Radio size="small" />}
+                  label="Write"
+                />
+              </MenuItem>
+              {!isMobile && (
+                <MenuItem
+                  title="Use writing and preview mode"
+                  onClick={() => handleModeSelect("both")}
+                >
+                  <FormControlLabel
+                    value="both"
+                    control={<Radio size="small" />}
+                    label="Both"
+                  />
+                </MenuItem>
+              )}
+              <MenuItem
+                title="Use preview mode"
+                onClick={() => handleModeSelect("preview")}
+              >
+                <FormControlLabel
+                  value="preview"
+                  control={<Radio size="small" />}
+                  label="Preview"
+                />
+              </MenuItem>
+            </MenuList>
+          </RadioGroup>
         </Menu>
       </Box>
     </Paper>

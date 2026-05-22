@@ -6,10 +6,16 @@ import { ExportOption } from "./ExportOption";
 import { IconButtonToggle } from "./IconButtonToggle";
 import { ZoomOption, type ZoomAction } from "./ZoomOption";
 import { Icon } from "./Icon";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import {
+  SourceLanguageOption,
+  type SourceLanguage,
+} from "./SourceLanguageOption";
 
 interface Props {
-  onViewModeSelect: (mode: ViewMode) => unknown;
+  onViewModeSelection: (mode: ViewMode) => unknown;
+  onSourceLanguageSelection: (language: SourceLanguage) => unknown;
+  sourceLanguage: SourceLanguage;
   viewMode: ViewMode;
   wrapPreview: boolean;
   wrapWriteArea: boolean;
@@ -78,6 +84,10 @@ export function ControlPanel(props: Props) {
             onChooseAction={props.onWritingAreaZoomAction}
             value={props.writingAreaZoom}
           />
+          <SourceLanguageOption
+            value={props.sourceLanguage}
+            onSelection={props.onSourceLanguageSelection}
+          />
           {isUndoSupported && (
             <IconButton title="Undo" onClick={props.onUndo}>
               <Icon iconId="undo" />
@@ -90,7 +100,12 @@ export function ControlPanel(props: Props) {
           )}
         </Paper>
       )}
-      {!isMobile && <ViewModeOption onChange={props.onViewModeSelect} />}
+      {!isMobile && (
+        <ViewModeOption
+          value={props.viewMode}
+          onChange={props.onViewModeSelection}
+        />
+      )}
       {props.viewMode !== "write" && (
         <Paper
           elevation={3}
@@ -124,7 +139,7 @@ export function ControlPanel(props: Props) {
       {isMobile && (
         <ViewModeToggle
           viewMode={props.viewMode}
-          onChange={props.onViewModeSelect}
+          onChange={props.onViewModeSelection}
         />
       )}
     </Box>
