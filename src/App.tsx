@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { WritingArea } from "./components/WritingArea";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { Preview } from "./components/Preview";
 import { paperComponentMap } from "./modules/component_maps/paper";
 import { ControlPanel } from "./components/ControlPanel";
@@ -9,6 +9,9 @@ import { useLayout } from "./modules/hooks/use_layout";
 import { exportAdoc } from "./modules/export_adoc";
 import useLocalStorageState from "use-local-storage-state";
 import type { ZoomAction } from "./components/ZoomOption";
+
+const SPLASHSCREEN_TRANSITION_TIME_MS = 200;
+const LOAD_DELAY_MS = 200;
 
 export function App() {
   const { isMobile } = useLayout();
@@ -47,6 +50,18 @@ export function App() {
       setter(1);
     }
   };
+
+  useEffect(() => {
+    const splashscreen = document.getElementById("splashscreen");
+    if (splashscreen) {
+      setTimeout(() => {
+        splashscreen.style.opacity = "0";
+        setTimeout(() => {
+          splashscreen.style.display = "none";
+        }, SPLASHSCREEN_TRANSITION_TIME_MS);
+      }, LOAD_DELAY_MS);
+    }
+  }, []);
 
   return (
     <Box
