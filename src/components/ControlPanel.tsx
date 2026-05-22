@@ -6,6 +6,7 @@ import { ExportOption } from "./ExportOption";
 import { IconButtonToggle } from "./IconButtonToggle";
 import { ZoomOption, type ZoomAction } from "./ZoomOption";
 import { Icon } from "./Icon";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
@@ -25,6 +26,17 @@ interface Props {
 
 export function ControlPanel(props: Props) {
   const { isMobile } = useLayout();
+
+  const [isUndoSupported] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const hasExecCommand = typeof document.execCommand === "function";
+    return hasExecCommand && document.queryCommandSupported("undo");
+  });
+  const [isRedoSupported] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const hasExecCommand = typeof document.execCommand === "function";
+    return hasExecCommand && document.queryCommandSupported("redo");
+  });
 
   return (
     <Box
@@ -66,12 +78,16 @@ export function ControlPanel(props: Props) {
             onChooseAction={props.onWritingAreaZoomAction}
             value={props.writingAreaZoom}
           />
-          <IconButton title="Undo" onClick={props.onUndo}>
-            <Icon iconId="undo" />
-          </IconButton>
-          <IconButton title="Redo" onClick={props.onRedo}>
-            <Icon iconId="redo" />
-          </IconButton>
+          {isUndoSupported && (
+            <IconButton title="Undo" onClick={props.onUndo}>
+              <Icon iconId="undo" />
+            </IconButton>
+          )}
+          {isRedoSupported && (
+            <IconButton title="Redo" onClick={props.onRedo}>
+              <Icon iconId="redo" />
+            </IconButton>
+          )}
         </Paper>
       )}
       {!isMobile && <ViewModeOption onChange={props.onViewModeSelect} />}
