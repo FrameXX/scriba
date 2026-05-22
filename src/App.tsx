@@ -1,6 +1,12 @@
 import { Box } from "@mui/material";
-import { WritingArea } from "./components/WritingArea";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { WritingArea, type WritingAreaRef } from "./components/WritingArea";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { Preview } from "./components/Preview";
 import { paperComponentMap } from "./modules/component_maps/paper";
 import { ControlPanel } from "./components/ControlPanel";
@@ -17,6 +23,7 @@ export function App() {
   const { isMobile } = useLayout();
   const [sourceCode, setSourceCode] = useState("");
   const [selectedViewMode, setSelectedViewMode] = useState<ViewMode>("both");
+  const writingAreaRef = useRef<WritingAreaRef>(null);
   const [wrapPreview, setWrapPreview] = useLocalStorageState("wrap_preview", {
     defaultValue: true,
   });
@@ -92,6 +99,7 @@ export function App() {
           }}
         >
           <WritingArea
+            ref={writingAreaRef}
             zoom={writingAreaZoom}
             wrapContent={wrapWriteArea}
             visible={viewMode != "preview"}
@@ -121,6 +129,8 @@ export function App() {
           onRequestAdocExport={() => exportAdoc("document.adoc", sourceCode)}
           onToggleWrapPreview={() => setWrapPreview((value) => !value)}
           onToggleWrapWriteArea={() => setWrapWriteArea((value) => !value)}
+          onUndo={() => writingAreaRef.current?.undo()}
+          onRedo={() => writingAreaRef.current?.redo()}
         />
       </Box>
     </Box>

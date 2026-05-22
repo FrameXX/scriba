@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { useDebouncedValue } from "../modules/hooks/use_debounced_value";
 import { DEFAULT_SOURCE_CODE } from "../modules/default_source_code";
 import useLocalStorageState from "use-local-storage-state";
@@ -11,12 +11,28 @@ interface Props {
   zoom: number;
 }
 
-export function WritingArea(props: Props) {
+export interface WritingAreaRef {
+  undo: () => void;
+  redo: () => void;
+}
+
+export const WritingArea = forwardRef<WritingAreaRef, Props>((props, ref) => {
   const input = useRef<HTMLElement>(null);
   const [content, setContent] = useLocalStorageState("source_code", {
     defaultValue: DEFAULT_SOURCE_CODE,
   });
   const contentDebounced = useDebouncedValue(content, 1000);
+
+  useImperativeHandle(ref, () => ({
+    undo: () => {
+      input.current?.focus();
+      document.execCommand("undo");
+    },
+    redo: () => {
+      input.current?.focus();
+      document.execCommand("redo");
+    },
+  }));
 
   useEffect(() => {
     props.onChange?.(contentDebounced);
@@ -105,4 +121,4 @@ export function WritingArea(props: Props) {
       />
     </Paper>
   );
-}
+});

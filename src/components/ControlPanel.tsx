@@ -1,10 +1,11 @@
-import { Box, Paper } from "@mui/material";
+import { Box, IconButton, Paper } from "@mui/material";
 import { ViewModeOption, type ViewMode } from "./ViewModeOption";
 import { useLayout } from "../modules/hooks/use_layout";
 import { ViewModeToggle } from "./ViewModeToggle";
 import { ExportOption } from "./ExportOption";
 import { IconButtonToggle } from "./IconButtonToggle";
 import { ZoomOption, type ZoomAction } from "./ZoomOption";
+import { Icon } from "./Icon";
 
 interface Props {
   onViewModeSelect: (mode: ViewMode) => unknown;
@@ -18,6 +19,8 @@ interface Props {
   onRequestAdocExport: () => unknown;
   onToggleWrapPreview: () => unknown;
   onToggleWrapWriteArea: () => unknown;
+  onUndo: () => unknown;
+  onRedo: () => unknown;
 }
 
 export function ControlPanel(props: Props) {
@@ -63,6 +66,12 @@ export function ControlPanel(props: Props) {
             onChooseAction={props.onWritingAreaZoomAction}
             value={props.writingAreaZoom}
           />
+          <IconButton title="Undo" onClick={props.onUndo}>
+            <Icon iconId="undo" />
+          </IconButton>
+          <IconButton title="Redo" onClick={props.onRedo}>
+            <Icon iconId="redo" />
+          </IconButton>
         </Paper>
       )}
       {!isMobile && <ViewModeOption onChange={props.onViewModeSelect} />}
