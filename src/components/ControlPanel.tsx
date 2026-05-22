@@ -64,7 +64,7 @@ export function ControlPanel(props: Props) {
             display: "flex",
             justifyContent: "left",
             alignItems: "center",
-            flexGrow: 1,
+            flex: 1,
             margin: 0,
             flexShrink: 0,
           }}
@@ -113,7 +113,7 @@ export function ControlPanel(props: Props) {
             display: "flex",
             justifyContent: "left",
             alignItems: "center",
-            flexGrow: 1,
+            flex: 1,
             margin: 0,
             flexShrink: 0,
           }}

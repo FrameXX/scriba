@@ -17,7 +17,8 @@ export default defineConfig({
       manifest: {
         name: "Scriba",
         short_name: "Scriba",
-        description: "Simple AsciiDoc editor",
+        description:
+          "A simple editor, previewer and exporter for AsciiDoc and MarkDown",
         theme_color: "#378fe7",
         background_color: "#1a1a1a",
         display: "standalone",

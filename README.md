@@ -1,73 +1,25 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="logo.png" style="width: 128px; height: 128px">
 
-Currently, two official plugins are available:
+# Scriba
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**A simple editor, previewer and exporter for AsciiDoc and MarkDown**
 
-## React Compiler
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features description
 
-## Expanding the ESLint configuration
+The editor consists of 3 main areas. That being the writing area on the left, preview area on the right and the control panel at the bottom. The visibility of the writing area and the preview area can be changed with the button in the center of the control panel. Controls that are relevant to the writing area are positioned under the writing area and controls that are relevant to the preview area are positioned under the preview area. The changes you make in the writing area are continously saved to the browser storage and will persist across sessions. You can export your work to PDF or AsciiDoc source file. When exporting to PDF the app will open you browser's print dialog where an option "save to PDF" or "print to PDF" should be available.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Development
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+I use [Bun](https://bun.com/) for package management. But realistically the current setup should work with [NodeJS](https://nodejs.org/en) too.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+As a code editor I kindly recommend [Zed](https://zed.dev/).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Use `bun run dev` to start a development server that will "hot reload" modules as you make changes in them.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Use `bun run build` to build the app into files that can be distributed (hosted on a server).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Use `bun run preview` to start a preview server which hosts the files for distribution you build with the `bun run build` command.
