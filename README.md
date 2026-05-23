@@ -27,3 +27,27 @@ As a code editor I kindly recommend [Zed](https://zed.dev/).
 ## Hosting
 
 Run `docker compose up -d --build` to run a nginx server on port 3002.
+
+## Hodnocení
+
+| Kategorie                         | Splněno | Komentář                                                                                                                                                                                         | body |
+| --------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
+| Dokumentace                       | ✅      |                                                                                                                                                                                                  | 1    |
+| Validita                          | ✅      |                                                                                                                                                                                                  | 1    |
+| Semantické značky                 | ✅      | Snažil sem se. Např i všechna tlačítka mají title kvůli přístupnosti                                                                                                                             | 1    |
+| Grafika - SVG / Canvas            | ✅      | SVG logo používám na [splashscreenu](index.html#L55) a po stránce používám [ikonky](./src/components/Icon.tsx) z [SVG spritu](./src/assets/icons.svg).                                           | 2    |
+| Média - Audio/Video               | ⛔      |                                                                                                                                                                                                  | 1    |
+| Formulářové prvky                 | ☑️      | Nevím jestli se to dá počítat, ale ve [WritingArea](./src/components/WritingArea.tsx) se nějaké rádoby formulářové věci dějí.                                                                    | 2    |
+| Pokročilé selektory               | ✅      | Např. [zde](./src/components/WritingArea.tsx#L108)                                                                                                                                               | 1    |
+| CSS3 transformace 2D/3D           | ✅      | Např. [zde](./src/index.css#L66)                                                                                                                                                                 | 2    |
+| CSS3 transitions/animations       | ✅      | [Stejný příklad](./src/index.css#L66)                                                                                                                                                            | 2    |
+| Media queries                     | ✅      | Např. [zde](./src/index.css#L9). Přizpůsobení se mobilům lze vidět [zde](./src/App.tsx#L64).                                                                                                     | 2    |
+| Nested CSS                        | ✅      | Např. [zde](./src/components/WritingArea.tsx#L108)                                                                                                                                               | 1    |
+| OOP přístup                       | ✅      | Např třída [Processor](./src/modules/processor.ts) a její rozšiřující třídy [AsciiDocProcessor](./src/modules/processor/asciidoc.ts) a [MarkDownProcessor](./src/modules/processor/markdown.ts). | 2    |
+| Použití JS frameworku či knihovny | ✅      | Použil jsem knihovnu React.                                                                                                                                                                      | 1    |
+| Použití pokročilých JS API        | ✅      | [Zde](./src/modules/export_adoc.ts) je práce s File API.                                                                                                                                         | 3    |
+| Funkční historie                  | ⛔      |                                                                                                                                                                                                  | 2    |
+| Ovládání medií                    | ⛔      |                                                                                                                                                                                                  | 1    |
+| Offline aplikace                  | ✅      | Aplikaci lze nainstalovat jako PWA v prohlížečích, které to podporují                                                                                                                            | 2    |
+| JS práce s SVG                    | ⛔      |                                                                                                                                                                                                  | 2    |
+| Webová komponenta                 | ⛔      |                                                                                                                                                                                                  | 2    |
