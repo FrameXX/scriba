@@ -23,3 +23,7 @@ As a code editor I kindly recommend [Zed](https://zed.dev/).
 - Use `bun run build` to build the app into files that can be distributed (hosted on a server).
 
 - Use `bun run preview` to start a preview server which hosts the files for distribution you build with the `bun run build` command.
+
+## Hosting
+
+Run `docker compose up -d --build` to run a nginx server on port 3002.
