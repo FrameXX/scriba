@@ -30,11 +30,11 @@ Run `docker compose up -d --build` to run a nginx server on port 3002.
 
 ## Hodnocení
 
-| Kategorie                         | Splněno | Komentář                                                                                                                                                                                         | body |
+| Kategorie                         | Splněno | Komentář                                                                                                                                                                                         | Body |
 | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
 | Dokumentace                       | ✅      |                                                                                                                                                                                                  | 1    |
 | Validita                          | ✅      | https://validator.w3.org/nu/?doc=https%3A%2F%2Fscriba.framexx.dev%2F                                                                                                                             | 1    |
-| Semantické značky                 | ✅      | Snažil sem se. Např i všechna tlačítka mají title kvůli přístupnosti                                                                                                                             | 1    |
+| Semantické značky                 | ✅      | Snažil sem se. Např i všechna tlačítka mají title kvůli přístupnosti.                                                                                                                            | 1    |
 | Grafika - SVG / Canvas            | ✅      | SVG logo používám na [splashscreenu](index.html#L55) a po stránce používám [ikonky](./src/components/Icon.tsx) z [SVG spritu](./src/assets/icons.svg).                                           | 2    |
 | Média - Audio/Video               | ⛔      |                                                                                                                                                                                                  | 1    |
 | Formulářové prvky                 | ☑️      | Nevím jestli se to dá počítat, ale ve [WritingArea](./src/components/WritingArea.tsx) se nějaké rádoby formulářové věci dějí.                                                                    | 2    |
