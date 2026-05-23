@@ -30,18 +30,24 @@ interface Props {
   onRedo: () => unknown;
 }
 
+function runtimeSupportsExec() {
+  return !(
+    typeof window === "undefined" ||
+    typeof document.execCommand !== "function" ||
+    typeof document.queryCommandSupported !== "function"
+  );
+}
+
 export function ControlPanel(props: Props) {
   const { isMobile } = useLayout();
 
   const [isUndoSupported] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const hasExecCommand = typeof document.execCommand === "function";
-    return hasExecCommand && document.queryCommandSupported("undo");
+    if (!runtimeSupportsExec()) return false;
+    return document.queryCommandSupported("undo");
   });
   const [isRedoSupported] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const hasExecCommand = typeof document.execCommand === "function";
-    return hasExecCommand && document.queryCommandSupported("redo");
+    if (!runtimeSupportsExec()) return false;
+    return document.queryCommandSupported("redo");
   });
 
   return (
